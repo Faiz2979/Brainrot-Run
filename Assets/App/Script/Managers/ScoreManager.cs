@@ -6,11 +6,9 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
 
-    private float timer;
     private int score;
     public int Score => score;
 
-    private bool isPlaying = false;
     [Tooltip("Interval in seconds to increase score")]
     [SerializeField] private float interval = 0.1f; // setiap 0.1 detik naik skor 1
     private float intervalTimer = 0f;
@@ -24,7 +22,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isPlaying) return;
+        if (!GameManager.Instance.IsPlaying) return;
 
         intervalTimer += Time.deltaTime;
 
@@ -43,12 +41,12 @@ public class ScoreManager : MonoBehaviour
 
     public void StartScoring()
     {
-        isPlaying = true;
+        GameManager.Instance.SetIsPlaying(true);
         ResetScore();
     }
 
     public void StopScoring()
     {
-        isPlaying = false;
+        GameManager.Instance.SetIsPlaying(false);
     }
 }

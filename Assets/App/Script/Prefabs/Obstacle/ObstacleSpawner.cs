@@ -38,11 +38,10 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!isSetupReady) return;
+        if (!isSetupReady || !GameManager.Instance.IsPlaying) return;
         transform.position = SpawnerPosition;
         // for set the obstacle when it spawn
         timer += Time.deltaTime;
-        Debug.Log(timer);
         if (timer > SpawnInterval)
         {
             GameObject go = Instantiate(ObstaclePrefab, transform.position, Quaternion.identity);
