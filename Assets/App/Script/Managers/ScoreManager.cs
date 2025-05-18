@@ -14,6 +14,7 @@ public class ScoreManager : MonoBehaviour
     [Tooltip("Interval in seconds to increase score")]
     [SerializeField] private float interval = 0.1f; // setiap 0.1 detik naik skor 1
     private float intervalTimer = 0f;
+    
 
     private void Awake()
     {
