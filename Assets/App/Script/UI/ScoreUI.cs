@@ -16,6 +16,6 @@ public class ScoreUI : MonoBehaviour
     private void Update()
     {
         scoreText.text = ScoreManager.Instance.Score.ToString(); // get in ScoreManager script
-        Debug.Log("Score Log: "+ ScoreManager.Instance.Score.ToString());
+        // Debug.Log("Score Log: "+ ScoreManager.Instance.Score.ToString());
     }
 }

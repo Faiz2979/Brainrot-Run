@@ -40,5 +40,14 @@ public class Obstacle : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        else if (collision.collider.CompareTag("Player"))
+        {
+            // for destroy the obstacle if touch a Player
+            Destroy(gameObject);
+            Debug.Log("Obstacle Collide with Player");
+            // for stop the game
+            // GameManager.Instance.SetIsPlaying(false);
+        }
     }
 }

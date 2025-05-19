@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
     public int Score => score;
 
     [Tooltip("Interval in seconds to increase score")]
-    [SerializeField] private float interval = 0.1f; // setiap 0.1 detik naik skor 1
+    [SerializeField] private float interval = 0.1f; // Increase score by 1 every 0.1 seconds
     private float intervalTimer = 0f;
     
 
@@ -25,11 +25,10 @@ public class ScoreManager : MonoBehaviour
         if (!GameManager.Instance.IsPlaying) return;
 
         intervalTimer += Time.deltaTime;
-
         while (intervalTimer >= interval)
         {
             intervalTimer -= interval;
-            score += 1; // total +10 per detik karena 0.1s * 10 = 1s
+            score += 1; // Adds 10 to score per second because 0.1s * 10 = 1s
         }
     }
 
