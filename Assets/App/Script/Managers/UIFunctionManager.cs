@@ -22,4 +22,24 @@ public class UIFunctionManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void PauseGame(){
+        Debug.Log("Pause Game");
+        // pause game logic here
+        GameManager.Instance.SetIsPlaying(false);
+    }
+
+    public void ResumeGame(){
+        Debug.Log("Resume Game");
+        // resume game logic here
+        GameManager.Instance.SetIsPlaying(true);
+    }
+
+    public void RestartGame(){
+        Debug.Log("Restart Game");
+        // restart game logic here
+        GameManager.Instance.SetIsPlaying(false);
+        ScoreManager.Instance.ResetScore();
+        GameManager.Instance.SetIsPlaying(true);
+    }
+
 }

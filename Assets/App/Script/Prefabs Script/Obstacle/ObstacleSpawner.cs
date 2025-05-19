@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-    public GameObject ObstaclePrefab; // prefab obstacle can be attach from folder of prefabs
+    public List<GameObject> ObstaclePrefab; // prefab obstacle can be attach from folder of prefabs
     public BoundaryObstacleSpawner BoundaryObstacleSpawner; // BoundaryObstacleSpawner is GameObject
     private Transform obstacleSpawner; // obstacleSpawner is GameObject
     public Vector2 SpawnerPosition = new Vector2(12f, -4f); // for set position of spawner
@@ -44,9 +44,13 @@ public class ObstacleSpawner : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > SpawnInterval)
         {
-            GameObject go = Instantiate(ObstaclePrefab, transform.position, Quaternion.identity);
-            Obstacle obstacle = go.GetComponent<Obstacle>();
-            obstacle.SetSpeed(Speed);
+            if (ObstaclePrefab != null && ObstaclePrefab.Count > 0)
+            {
+                int randomIndex = Random.Range(0, ObstaclePrefab.Count);
+                GameObject go = Instantiate(ObstaclePrefab[randomIndex], transform.position, Quaternion.identity);
+                Obstacle obstacle = go.GetComponent<Obstacle>();
+                obstacle.SetSpeed(Speed);
+            }
 
             timer -= SpawnInterval;
         }
