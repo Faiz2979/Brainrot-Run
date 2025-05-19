@@ -8,7 +8,7 @@ public class UIFunctionManager : MonoBehaviour
     public void PlayGame(){
         Debug.Log("Play Game");
         // play game logic here
-        ScoreManager.Instance.StartScoring(); // Mulai hitung skor
+        GameManager.Instance.SetIsPlaying(true);
     }
 
     public void OpenShop(){

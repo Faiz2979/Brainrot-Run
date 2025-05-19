@@ -21,7 +21,7 @@ public class Obstacle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (speed <= 0) return;
+        if (speed <= 0 || !GameManager.Instance.IsPlaying) return;
         // for move the obstacle to left side
         Vector2 targetPos = speed * Time.fixedDeltaTime * Vector2.left;
         rb.MovePosition(rb.position + targetPos);

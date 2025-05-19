@@ -13,7 +13,7 @@ public class ScoreUI : MonoBehaviour
         scoreText = GetComponent<TextMeshProUGUI>();
     }
 
-  private void Update()
+    private void Update()
     {
         scoreText.text = ScoreManager.Instance.Score.ToString(); // get in ScoreManager script
         Debug.Log("Score Log: "+ ScoreManager.Instance.Score.ToString());
