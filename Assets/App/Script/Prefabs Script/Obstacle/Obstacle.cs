@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    [SerializeField]private Vector2 obstaclePosition; // obstacle is GameObject
     private Rigidbody2D rb;
     private float speed;
 
@@ -43,11 +44,8 @@ public class Obstacle : MonoBehaviour
         
         else if (collision.collider.CompareTag("Player"))
         {
-            // for destroy the obstacle if touch a Player
             Destroy(gameObject);
             Debug.Log("Obstacle Collide with Player");
-            // for stop the game
-            // GameManager.Instance.SetIsPlaying(false);
         }
     }
 }
