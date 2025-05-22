@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump Settings")]
     public float jumpForce = 7f;
 
+    // private bool isPlaying () => GameManager.Instance.IsPlaying;
     private Rigidbody2D rb;
     private bool isGrounded = false;
 
@@ -15,11 +16,12 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Check for jump input and only allow jumping if grounded
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetKey("space") && isGrounded && GameManager.Instance.IsPlaying)
         {
+            Debug.Log("Jump");
             Jump();
         }
     }
