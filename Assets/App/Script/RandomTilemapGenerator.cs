@@ -3,111 +3,97 @@ using UnityEngine;
 
 public class RandomTilemapGenerator : MonoBehaviour
 {
-    [Header("Starter Terrain (tidak diacak)")]
-    public GameObject[] starterPrefabs;
+    [Header("Prefab Terrain Acak")]
+    public List<GameObject> tilePrefabs;
 
-    [Header("Prefab Acak")]
-    public GameObject[] terrainPrefabs;
+    [Header("Starter Terrain di Scene")]
+    public List<GameObject> starterTerrains; // Drag manual dari scene
 
-    [Header("Pengaturan Gerak")]
+    [Header("Pengaturan Spawn")]
+    public Vector3 spawnPosition = new Vector3(10f, 0f, 0f);
+    public float spawnInterval = 2f;
+
+    [Header("Gerakan Terrain")]
     public float scrollSpeed = 2f;
 
-    [Header("Awal dan Spawning")]
-    public int initialPrefabs = 5;
-    public float spacing = 1f;
+    [Header("Parent Grid (opsional)")]
+    public Transform parent; // Tambahkan ini
 
-    [Header("Parent (opsional)")]
-    public Transform parent;
+    private List<GameObject> activeTerrains = new List<GameObject>();
+    private float timer;
 
-    private List<GameObject> activeBlocks = new List<GameObject>();
-    private float nextSpawnX = 0f;
-    private int starterIndex = 0;
+    private bool starterBolehBergerak = false;
 
     void Start()
     {
-        for (int i = 0; i < initialPrefabs; i++)
-        {
-            SpawnNextBlock();
-        }
+        timer = spawnInterval;
     }
 
     void Update()
     {
         if (GameManager.Instance == null || !GameManager.Instance.IsPlaying) return;
 
-        ScrollBlocks();
-        RecycleBlocks();
-    }
+        
+            foreach (var starter in starterTerrains)
+            {
+                if (starter != null)
+                    starter.transform.position += Vector3.left * scrollSpeed * Time.deltaTime;
+            }
+        
 
-void SpawnNextBlock()
-{
-    GameObject prefab;
-
-    // 1. Ambil prefab starter atau random
-    if (starterIndex < starterPrefabs.Length)
-    {
-        prefab = starterPrefabs[starterIndex];
-        starterIndex++;
-    }
-    else
-    {
-        if (terrainPrefabs.Length == 0) return;
-        prefab = terrainPrefabs[Random.Range(0, terrainPrefabs.Length)];
-    }
-
-    // 2. Instansiasi prefab sementara di posisi (0, 0) dulu agar bisa ukur lebar
-    GameObject tempBlock = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-    float prefabWidth = GetPrefabWidth(tempBlock);
-
-    // 3. Pindahkan prefab ke posisi yang sesuai
-    Vector3 spawnPosition = new Vector3(nextSpawnX, 0f, 0f);
-    tempBlock.transform.position = spawnPosition;
-
-    // 4. Set parent jika ada
-    if (parent != null)
-        tempBlock.transform.parent = parent;
-
-    // 5. Tambahkan ke list dan perbarui next spawn X
-    activeBlocks.Add(tempBlock);
-    nextSpawnX = spawnPosition.x + prefabWidth + spacing;
-}
-
-
-    float GetPrefabWidth(GameObject obj)
-    {
-        var renderers = obj.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return 1f;
-
-        Bounds bounds = renderers[0].bounds;
-        foreach (var r in renderers)
+        // 2. Timer untuk spawn terrain baru
+        timer -= Time.deltaTime;
+        if (timer <= 0f)
         {
-            bounds.Encapsulate(r.bounds);
+            SpawnRandomTerrain();
+            timer = spawnInterval;
         }
 
-        return bounds.size.x;
+        // 3. Gerakkan dan bersihkan terrain yang di-spawn
+        ScrollTerrains();
+        CleanupTerrains();
     }
 
-    void ScrollBlocks()
+    // Panggil fungsi ini misalnya dari OnTriggerEnter player untuk mengaktifkan scroll starter terrain
+    public void AktifkanStarterTerrain()
     {
-        foreach (var block in activeBlocks)
+        starterBolehBergerak = true;
+    }
+
+    void SpawnRandomTerrain()
+    {
+        if (tilePrefabs == null || tilePrefabs.Count == 0) return;
+
+        GameObject prefab = tilePrefabs[Random.Range(0, tilePrefabs.Count)];
+        Vector3 spawnPos = new Vector3(spawnPosition.x, 0f, spawnPosition.z);
+        GameObject terrain = Instantiate(prefab, spawnPos, Quaternion.identity, parent); // Gunakan parent di sini
+        activeTerrains.Add(terrain);
+    }
+
+    void ScrollTerrains()
+    {
+        foreach (var terrain in activeTerrains)
         {
-            if (block != null)
-                block.transform.position += Vector3.left * scrollSpeed * Time.deltaTime;
+            if (terrain != null)
+                terrain.transform.position += Vector3.left * scrollSpeed * Time.deltaTime;
         }
     }
 
-    void RecycleBlocks()
+    void CleanupTerrains()
     {
-        if (activeBlocks.Count == 0) return;
-
-        GameObject first = activeBlocks[0];
-        float blockRightEdge = first.transform.position.x + GetPrefabWidth(first);
-
-        if (blockRightEdge < -20f)
+        for (int i = activeTerrains.Count - 1; i >= 0; i--)
         {
-            Destroy(first);
-            activeBlocks.RemoveAt(0);
-            SpawnNextBlock();
+            if (activeTerrains[i].transform.position.x < -30f)
+            {
+                Destroy(activeTerrains[i]);
+                activeTerrains.RemoveAt(i);
+            }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawCube(spawnPosition, new Vector3(1f, 0.1f, 0.1f));
     }
 }
