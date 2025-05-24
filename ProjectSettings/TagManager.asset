@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BoundaryObstacleSpawner
   - Ground
+  - Death
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
