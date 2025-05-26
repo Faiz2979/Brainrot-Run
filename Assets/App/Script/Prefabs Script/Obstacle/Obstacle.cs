@@ -45,7 +45,8 @@ public class Obstacle : MonoBehaviour
         else if (collision.collider.CompareTag("Player"))
         {
             Destroy(gameObject);
-            Debug.Log("Obstacle Collide with Player");
+            Debug.Log("Player Die");
+            GameManager.Instance.GameOver(); // Call GameManager to handle game over
         }
     }
 }

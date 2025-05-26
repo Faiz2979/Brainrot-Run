@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -177,9 +177,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 112
-        y: 80
+        y: 112
         width: 16
-        height: 35
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,7 +200,7 @@ TextureImporter:
         x: 144
         y: 112
         width: 16
-        height: 9
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,7 +221,7 @@ TextureImporter:
         x: 176
         y: 112
         width: 16
-        height: 4
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,7 +242,7 @@ TextureImporter:
         x: 208
         y: 112
         width: 16
-        height: 5
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -261,9 +261,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 240
-        y: 80
+        y: 112
         width: 16
-        height: 35
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -344,7 +344,7 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_11
       rect:
         serializedVersion: 2
-        x: 144
+        x: 112
         y: 80
         width: 16
         height: 16
@@ -365,7 +365,7 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_12
       rect:
         serializedVersion: 2
-        x: 176
+        x: 144
         y: 80
         width: 16
         height: 16
@@ -386,7 +386,7 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_13
       rect:
         serializedVersion: 2
-        x: 208
+        x: 176
         y: 80
         width: 16
         height: 16
@@ -407,9 +407,9 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_14
       rect:
         serializedVersion: 2
-        x: 113
-        y: 48
-        width: 15
+        x: 208
+        y: 80
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -428,8 +428,8 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_15
       rect:
         serializedVersion: 2
-        x: 144
-        y: 48
+        x: 240
+        y: 80
         width: 16
         height: 16
       alignment: 0
@@ -449,7 +449,7 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_16
       rect:
         serializedVersion: 2
-        x: 176
+        x: 112
         y: 48
         width: 16
         height: 16
@@ -470,7 +470,7 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_17
       rect:
         serializedVersion: 2
-        x: 208
+        x: 144
         y: 48
         width: 16
         height: 16
@@ -491,9 +491,9 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_18
       rect:
         serializedVersion: 2
-        x: 240
+        x: 176
         y: 48
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -512,10 +512,10 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_19
       rect:
         serializedVersion: 2
-        x: 113
-        y: 23
-        width: 15
-        height: 9
+        x: 208
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -533,10 +533,10 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_20
       rect:
         serializedVersion: 2
-        x: 144
-        y: 23
+        x: 240
+        y: 48
         width: 16
-        height: 9
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -554,10 +554,10 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_21
       rect:
         serializedVersion: 2
-        x: 176
-        y: 23
+        x: 112
+        y: 16
         width: 16
-        height: 9
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -575,10 +575,10 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_22
       rect:
         serializedVersion: 2
-        x: 208
-        y: 23
+        x: 144
+        y: 16
         width: 16
-        height: 9
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -596,10 +596,10 @@ TextureImporter:
       name: Tile Tanah, Bg, Rumput 16x16_23
       rect:
         serializedVersion: 2
-        x: 240
-        y: 23
-        width: 15
-        height: 9
+        x: 176
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -609,6 +609,48 @@ TextureImporter:
       bones: []
       spriteID: 95a7bbb48f2d7ff4498ff3fa4377f464
       internalID: 605461725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile Tanah, Bg, Rumput 16x16_24
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f57e53cb02d4c9428ae82dd5b10bf4e
+      internalID: 1893627076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tile Tanah, Bg, Rumput 16x16_25
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b55b4244beed374180b2aa8ff102e6d
+      internalID: 1265671315
       vertices: []
       indices: 
       edges: []
@@ -641,6 +683,8 @@ TextureImporter:
       Tile Tanah, Bg, Rumput 16x16_21: 1536155060
       Tile Tanah, Bg, Rumput 16x16_22: 1266930371
       Tile Tanah, Bg, Rumput 16x16_23: 605461725
+      Tile Tanah, Bg, Rumput 16x16_24: 1893627076
+      Tile Tanah, Bg, Rumput 16x16_25: 1265671315
       Tile Tanah, Bg, Rumput 16x16_3: 231083191
       Tile Tanah, Bg, Rumput 16x16_4: 1622108160
       Tile Tanah, Bg, Rumput 16x16_5: -1696432518
