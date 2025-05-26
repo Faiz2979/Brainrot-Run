@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 7f;
 
     private Rigidbody2D rb;
+    [SerializeField] private Animator anim;
     private bool isGrounded = false;
 
     private int jumpCount = 0;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         {
             downQueued = true;
         }
+        AnimationController();
     }
 
     void FixedUpdate()
@@ -56,7 +58,6 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        isGrounded = false;
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -66,5 +67,20 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             jumpCount = 0;
         }
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
+            anim.SetBool("isJumping", false);
+        }
+    }
+
+    void AnimationController(){
+        bool isRunning = isGrounded && GameManager.Instance.IsPlaying;
+        anim.SetBool("isJumping", !isGrounded);
+        anim.SetBool("isRunning", isRunning);
     }
 }
