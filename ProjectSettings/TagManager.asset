@@ -7,7 +7,6 @@ TagManager:
   - BoundaryObstacleSpawner
   - Ground
   - Death
-  - Coin
   - Coins
   layers:
   - Default

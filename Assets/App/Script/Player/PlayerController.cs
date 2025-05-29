@@ -66,16 +66,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
- private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Coins"))
-        {
-            CoinsManager.Instance.AddCoins(1); // Gunakan singleton
-            Destroy(other.gameObject, 0.05f); // Delay kecil untuk memastikan trigger selesai
-        }
-    }
-
-
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -85,6 +75,23 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            jumpCount = 0;
+        }
+        if (col.collider.CompareTag("Death"))
+        {
+            // Logika untuk menangani kematian player
+            Debug.Log("Player has died!");
+            GameManager.Instance.SetIsPlaying(false);
+            GameManager.Instance.GameOver(); // Panggil method GameOver di GameManager
+            // Tambahkan logika lain seperti respawn atau game over
+        }
+        if (col.collider.CompareTag("Coins"))
+        {
+            CoinsManager.Instance.AddCoins(1); // Gunakan singleton
+            Destroy(col.gameObject, 0.05f); // Delay kecil untuk memastikan trigger selesai
+        }
         {
             isGrounded = true;
             jumpCount = 0;
