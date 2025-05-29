@@ -17,14 +17,21 @@ public class PlayerController : MonoBehaviour
     private bool jumpQueued = false;
     private bool downQueued = false;
 
+    [Header("Audio Settings")]
+    public AudioClip jumpSound;
+    public AudioClip landSound;
+
+    private AudioSource audioSource;
+    private bool isPlayingLandSound = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        // Tangkap input sekali saja per frame
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && jumpCount < maxJumpCount)
         {
             jumpQueued = true;
@@ -34,6 +41,7 @@ public class PlayerController : MonoBehaviour
         {
             downQueued = true;
         }
+
         AnimationController();
     }
 
@@ -45,7 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
             jumpCount++;
-            jumpQueued = false; // reset agar tidak lompat dua kali
+            jumpQueued = false;
         }
 
         if (downQueued)
@@ -58,6 +66,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        audioSource.PlayOneShot(jumpSound);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -74,13 +83,47 @@ public class PlayerController : MonoBehaviour
         if (col.collider.CompareTag("Ground"))
         {
             isGrounded = false;
-            anim.SetBool("isJumping", false);
         }
     }
 
-    void AnimationController(){
-        bool isRunning = isGrounded && GameManager.Instance.IsPlaying;
-        anim.SetBool("isJumping", !isGrounded);
-        anim.SetBool("isRunning", isRunning);
+void AnimationController()
+{
+    float verticalVelocity = rb.velocity.y;
+
+    // Reset semua dulu
+    anim.SetBool("isRunning", false);
+    anim.SetBool("isJumping", false);
+    anim.SetBool("isFalling", false);
+
+    if (isGrounded && GameManager.Instance.IsPlaying){
+        anim.SetBool("isRunning", true);
+
+        // Mainkan landSound jika belum dimainkan
+        if (!isPlayingLandSound)
+        {
+            audioSource.clip = landSound;
+            audioSource.loop = true;
+            audioSource.Play();
+            isPlayingLandSound = true;
+        }
     }
+    else
+    {
+        if (isPlayingLandSound)
+        {
+            audioSource.Stop();
+            isPlayingLandSound = false;
+        }
+
+        if (verticalVelocity > 0.1f)
+        {
+            anim.SetBool("isJumping", true);
+        }
+        else if (verticalVelocity < -0.1f)
+        {
+            anim.SetBool("isFalling", true);
+        }
+    }
+}
+
 }

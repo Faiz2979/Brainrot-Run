@@ -14,9 +14,15 @@ public class GameManager : MonoBehaviour
 
     // === Getter untuk global akses ===
     public bool IsPlaying => isPlaying;
+    public bool isMuted => !toggleMusicActive; // Misalkan toggleMusicActive true berarti musik aktif
     public int Coins => coins;
     public float HighScore => highScore;
     public bool ToggleMusicActive => toggleMusicActive;
+
+
+    // === Singleton Pattern ===
+    [SerializeField]private AudioSource menuMusic; // Optional: jika ingin mengontrol audio dari GameManager
+    [SerializeField]private AudioSource gameMusic; // Optional: jika ingin mengontrol audio dari GameManager
 
     private void Awake()
     {
@@ -37,7 +43,7 @@ public class GameManager : MonoBehaviour
     public void SetCoins(int value) { coins = value; }
     public void SetHighScore(float value) { highScore = value; }
     public void SetToggleMusicActive(bool value) { toggleMusicActive = value; }
-
+    
     // === Game Flow ===
     public void PlayGame()
     {
@@ -88,5 +94,49 @@ public class GameManager : MonoBehaviour
         Debug.Log("Back to Menu");
         SetIsPlaying(false);
         // Tambahkan logika untuk kembali ke menu utama
+    }
+
+    public void ToggleMusic()
+    {
+        toggleMusicActive = !toggleMusicActive;
+
+        if (toggleMusicActive)
+        {
+            // Aktifkan musik sesuai state permainan
+            if (IsPlaying)
+            {
+                if (gameMusic != null)
+                {
+                    gameMusic.Play();
+                }
+                if (menuMusic != null)
+                {
+                    menuMusic.Stop();
+                }
+            }
+            else
+            {
+                if (menuMusic != null)
+                {
+                    menuMusic.Play();
+                }
+                if (gameMusic != null)
+                {
+                    gameMusic.Stop();
+                }
+            }
+        }
+        else
+        {
+            // Matikan semua musik
+            if (menuMusic != null)
+            {
+                menuMusic.Stop();
+            }
+            if (gameMusic != null)
+            {
+                gameMusic.Stop();
+            }
+        }
     }
 }
