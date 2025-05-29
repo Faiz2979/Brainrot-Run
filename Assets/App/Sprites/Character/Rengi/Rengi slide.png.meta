@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5e7843d233e8d3646a4588bbff74af9f
+guid: a2b08661cc51ea044b32ae101f6cd22a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -94,7 +94,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -107,7 +107,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -149,33 +149,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Rengi Idle_0
+      name: Rengi slide_0
       rect:
         serializedVersion: 2
         x: 11
         y: 1
-        width: 26
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0d487c8e724f8e74e820fa9dbbc48c2b
-      internalID: -2100495686
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rengi Idle_1
-      rect:
-        serializedVersion: 2
-        x: 59
-        y: 1
-        width: 26
+        width: 25
         height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -184,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 401514df8cdfd4c438176d9accd062fb
-      internalID: 1452351055
+      spriteID: f4febaf5ba15e424598c20d0bb4de03b
+      internalID: 2046314946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rengi Idle_2
+      name: Rengi slide_1
       rect:
         serializedVersion: 2
-        x: 107
+        x: 49
         y: 1
-        width: 26
-        height: 43
+        width: 42
+        height: 35
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a39bad096ce304a43b71198427c92119
-      internalID: 1983423193
+      spriteID: 1d663cf68480bf742a31729392dfc36e
+      internalID: 1975770494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rengi Idle_3
+      name: Rengi slide_2
       rect:
         serializedVersion: 2
-        x: 155
+        x: 97
         y: 1
-        width: 26
-        height: 43
+        width: 46
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b700a12ebbbbf14686b391a280b4121
-      internalID: 1474573496
+      spriteID: 223624ad2b9d203439c641268f42b098
+      internalID: 427410375
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rengi Idle_4
+      name: Rengi slide_3
       rect:
         serializedVersion: 2
-        x: 203
+        x: 145
         y: 1
-        width: 26
-        height: 44
+        width: 46
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,20 +226,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c0b14e7c791e1548807e323c26bf0c3
-      internalID: -1538880656
+      spriteID: 367c20fc4690a8640beba9e15d95a48c
+      internalID: -705990882
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rengi Idle_5
+      name: Rengi slide_4
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 1
+        width: 42
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30c855d0d451b8b4685812f3374e6c69
+      internalID: -1457863321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rengi slide_5
       rect:
         serializedVersion: 2
         x: 251
         y: 1
-        width: 26
-        height: 44
+        width: 25
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,8 +268,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b3b49a9e4041d7438f61f362d6d7010
-      internalID: -388117138
+      spriteID: 5a009870ffada2a4cb6f8b1f644496f9
+      internalID: -852051276
       vertices: []
       indices: 
       edges: []
@@ -285,12 +285,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Rengi Idle_0: -2100495686
-      Rengi Idle_1: 1452351055
-      Rengi Idle_2: 1983423193
-      Rengi Idle_3: 1474573496
-      Rengi Idle_4: -1538880656
-      Rengi Idle_5: -388117138
+      Rengi slide_0: 2046314946
+      Rengi slide_1: 1975770494
+      Rengi slide_2: 427410375
+      Rengi slide_3: -705990882
+      Rengi slide_4: -1457863321
+      Rengi slide_5: -852051276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

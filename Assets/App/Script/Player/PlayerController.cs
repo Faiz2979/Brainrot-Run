@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     private bool isPlayingLandSound = false;
 
+    [Header("Slide Settings")]
+    public float slideDuration = 0.5f; // Durasi sliding
+    private bool isSliding = false;    // Status sedang sliding
+    private float slideTimer = 0f;     // Timer untuk durasi sliding
+
     public CoinsManager cm;
     public TMP_Text coinText;
     void Start()
@@ -40,9 +45,19 @@ public class PlayerController : MonoBehaviour
             jumpQueued = true;
         }
 
+        // Modifikasi input untuk sliding (hanya di tanah) dan fast fall (di udara)
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            downQueued = true;
+            if (isGrounded)
+            {
+                // Aktifkan sliding
+                isSliding = true;
+                slideTimer = slideDuration;
+            }
+            else
+            {
+                downQueued = true; // Untuk fast fall di udara
+            }
         }
 
         AnimationController();
@@ -54,6 +69,11 @@ public class PlayerController : MonoBehaviour
 
         if (jumpQueued)
         {
+            // Jika sedang sliding, hentikan sliding saat melompat
+            if (isSliding)
+            {
+                isSliding = false;
+            }
             Jump();
             jumpCount++;
             jumpQueued = false;
@@ -64,9 +84,19 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, -jumpForce * 1.5f);
             downQueued = false;
         }
+
+        // Mengurangi timer sliding jika sedang sliding
+        if (isSliding)
+        {
+            slideTimer -= Time.fixedDeltaTime;
+            if (slideTimer <= 0)
+            {
+                isSliding = false;
+            }
+        }
     }
 
- private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Coins"))
         {
@@ -99,44 +129,59 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-void AnimationController()
-{
-    float verticalVelocity = rb.velocity.y;
-
-    // Reset semua dulu
-    anim.SetBool("isRunning", false);
-    anim.SetBool("isJumping", false);
-    anim.SetBool("isFalling", false);
-
-    if (isGrounded && GameManager.Instance.IsPlaying){
-        anim.SetBool("isRunning", true);
-
-        // Mainkan landSound jika belum dimainkan
-        if (!isPlayingLandSound)
-        {
-            audioSource.clip = landSound;
-            audioSource.loop = true;
-            audioSource.Play();
-            isPlayingLandSound = true;
-        }
-    }
-    else
+    void AnimationController()
     {
-        if (isPlayingLandSound)
-        {
-            audioSource.Stop();
-            isPlayingLandSound = false;
-        }
+        float verticalVelocity = rb.velocity.y;
 
-        if (verticalVelocity > 0.1f)
+        // Reset semua dulu
+        anim.SetBool("isRunning", false);
+        anim.SetBool("isJumping", false);
+        anim.SetBool("isFalling", false);
+        anim.SetBool("isSliding", false); // Reset animasi sliding
+
+        if (isGrounded && GameManager.Instance.IsPlaying)
         {
-            anim.SetBool("isJumping", true);
+            // Jika sedang sliding, set animasi sliding
+            if (isSliding)
+            {
+                anim.SetBool("isSliding", true);
+                // Hentikan landSound jika sedang diputar
+                if (isPlayingLandSound)
+                {
+                    audioSource.Stop();
+                    isPlayingLandSound = false;
+                }
+            }
+            else
+            {
+                anim.SetBool("isRunning", true);
+
+                // Mainkan landSound jika belum dimainkan
+                if (!isPlayingLandSound)
+                {
+                    audioSource.clip = landSound;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                    isPlayingLandSound = true;
+                }
+            }
         }
-        else if (verticalVelocity < -0.1f)
+        else
         {
-            anim.SetBool("isFalling", true);
+            if (isPlayingLandSound)
+            {
+                audioSource.Stop();
+                isPlayingLandSound = false;
+            }
+
+            if (verticalVelocity > 0.1f)
+            {
+                anim.SetBool("isJumping", true);
+            }
+            else if (verticalVelocity < -0.1f)
+            {
+                anim.SetBool("isFalling", true);
+            }
         }
     }
-}
-
 }

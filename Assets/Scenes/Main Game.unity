@@ -363,6 +363,7 @@ MonoBehaviour:
   anim: {fileID: 342021863}
   jumpSound: {fileID: 8300000, guid: 9e7f52aed84b37a48b47cbe4a8b53948, type: 3}
   landSound: {fileID: 8300000, guid: 62f93671e4cb40a468ff0b4dbd852784, type: 3}
+  slideDuration: 0.3
   cm: {fileID: 188582405}
   coinText: {fileID: 1238812239}
 --- !u!70 &230415537
