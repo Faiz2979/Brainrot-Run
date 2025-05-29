@@ -72,6 +72,15 @@ public class PlayerController : MonoBehaviour
         audioSource.PlayOneShot(jumpSound);
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Coins"))
+        {
+            CoinsManager.Instance.AddCoins(1); // Gunakan singleton
+            Destroy(col.gameObject, 0.05f); // Delay kecil untuk memastikan trigger selesai
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.CompareTag("Ground"))
@@ -86,11 +95,6 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.SetIsPlaying(false);
             GameManager.Instance.GameOver(); // Panggil method GameOver di GameManager
             // Tambahkan logika lain seperti respawn atau game over
-        }
-        if (col.collider.CompareTag("Coins"))
-        {
-            CoinsManager.Instance.AddCoins(1); // Gunakan singleton
-            Destroy(col.gameObject, 0.05f); // Delay kecil untuk memastikan trigger selesai
         }
         {
             isGrounded = true;
