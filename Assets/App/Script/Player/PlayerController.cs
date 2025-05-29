@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private bool jumpQueued = false;
     private bool downQueued = false;
 
+    public CoinsManager cm;
+    public TMP_Text coinText;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -54,6 +57,16 @@ public class PlayerController : MonoBehaviour
             downQueued = false;
         }
     }
+
+ private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coins"))
+        {
+            CoinsManager.Instance.AddCoins(1); // Gunakan singleton
+            Destroy(other.gameObject, 0.05f); // Delay kecil untuk memastikan trigger selesai
+        }
+    }
+
 
     void Jump()
     {
