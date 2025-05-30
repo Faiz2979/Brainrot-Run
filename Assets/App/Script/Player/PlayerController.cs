@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool isGrounded = false;
+    private Transform gameOver;
 
     private int jumpCount = 0;
     private int maxJumpCount = 2;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        gameOver = GetComponent<Transform>();
     }
 
     void Update()
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
                 slideTimer = slideDuration;
             }
         }
+        GameOver();
     }
 
     void FixedUpdate()
@@ -170,6 +173,16 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    void GameOver()
+    {
+        if(gameOver.position.y < -5f)
+        {
+        Debug.Log("Game Over");
+        GameManager.Instance.GameOver();
+        }
+    }
+
 
     public bool IsGrounded => isGrounded;
     public bool IsSliding => isSliding;

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +21,11 @@ public class GameManager : MonoBehaviour
     public float HighScore => highScore;
     public bool ToggleMusicActive => toggleMusicActive;
 
+    // === Game UI ===
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject mainMenuUI; // Optional: jika ingin mengontrol UI Menu Utama dari GameManager
+    [SerializeField] private GameObject gameUI; // Optional: jika ingin mengontrol UI Game dari GameManager
 
     // === Singleton Pattern ===
     [SerializeField]private AudioSource menuMusic; // Optional: jika ingin mengontrol audio dari GameManager
@@ -79,6 +86,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Restart Game");
         SetIsPlaying(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Memuat ulang scene saat ini
         ScoreManager.Instance.ResetScore(); // Pastikan ScoreManager ada
         SetIsPlaying(true);
     }
@@ -87,14 +95,21 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over");
         SetIsPlaying(false);
-        // Tambahkan tampilan Game Over UI jika perlu
+                    // Tambahkan tampilan Game Over UI jika perlu
+        if (gameOverUI != null)
+        {
+            gameUI.SetActive(false); // Optional: menonaktifkan menu utama
+            gameOverUI.SetActive(true);
+        }
+        // Simpan high score jika lebih tinggi dari yang ada
+        if (coins > highScore)
+        {
+            SetHighScore(coins);
+            Debug.Log("New High Score: " + highScore);
+        }
     }
 
-    public void toMenu(){
-        Debug.Log("Back to Menu");
-        SetIsPlaying(false);
-        // Tambahkan logika untuk kembali ke menu utama
-    }
+
 
     public void ToggleMusic()
     {

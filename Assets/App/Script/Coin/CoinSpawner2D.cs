@@ -41,6 +41,11 @@ public class CoinSpawner : MonoBehaviour
     {
         while (true)
         {
+            if(!GameManager.Instance.IsPlaying) // Pastikan game sedang berjalan
+            {
+                yield return null; // Tunggu frame berikutnya
+                continue;
+            }
             yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
             TrySpawnCoin();
         }

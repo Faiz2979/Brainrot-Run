@@ -7,6 +7,7 @@ public class PowerUpItem : MonoBehaviour
     
     void Update()
     {
+        if(!GameManager.Instance.IsPlaying) return; // Pastikan game sedang berjalan
         // Bergerak ke kiri seperti obstacle
         transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
         

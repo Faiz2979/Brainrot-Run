@@ -17,7 +17,7 @@ public class PowerUpSpawner : MonoBehaviour
     void Update()
     {
         // Hanya spawn jika game berjalan
-        // if (!GameManager.Instance.IsPlaying) return; // Uncomment jika ada GameManager
+        if (!GameManager.Instance.IsPlaying) return; // Uncomment jika ada GameManager
         
         spawnTimer += Time.deltaTime;
         
