@@ -58,6 +58,19 @@ public class PlayerController : MonoBehaviour
                 downQueued = true;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (isSliding)
+            {
+                isSliding = false;
+            }
+            else if (isGrounded)
+            {
+                isSliding = true;
+                slideTimer = slideDuration;
+            }
+        }
     }
 
     void FixedUpdate()

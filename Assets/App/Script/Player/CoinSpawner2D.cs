@@ -19,7 +19,12 @@ public class CoinSpawner : MonoBehaviour
     public float yMin = -2f;
     public float yMax = 2f;
 
+    [Header("Detection Settings")]
+    public float checkRadius = 0.3f; // radius untuk pengecekan area
+    public LayerMask collisionMask;  // Layer yang dianggap sebagai penghalang
+
     private float screenRightEdge;
+    private int maxAttempts = 5; // batas percobaan spawn ulang
 
     private void Start()
     {
@@ -29,7 +34,6 @@ public class CoinSpawner : MonoBehaviour
 
     private void CalculateScreenBounds()
     {
-        // Hitung tepi kanan layar dalam world space
         screenRightEdge = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
     }
 
@@ -38,21 +42,30 @@ public class CoinSpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
-            SpawnCoin();
+            TrySpawnCoin();
         }
     }
 
-    private void SpawnCoin()
+    private void TrySpawnCoin()
     {
-        // Hitung posisi spawn dengan offset dari tepi layar
-        float spawnX = screenRightEdge + xSpawnOffset;
-        float spawnY = Random.Range(yMin, yMax);
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            float spawnX = screenRightEdge + xSpawnOffset;
+            float spawnY = Random.Range(yMin, yMax);
+            Vector2 spawnPosition = new Vector2(spawnX, spawnY);
 
-        Vector2 spawnPosition = new Vector2(spawnX, spawnY);
-        Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+            // Gunakan OverlapCircle untuk cek area
+            Collider2D hit = Physics2D.OverlapCircle(spawnPosition, checkRadius, collisionMask);
+            if (hit == null)
+            {
+                Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+                return; // selesai jika berhasil spawn
+            }
+        }
+
+        Debug.LogWarning("Gagal spawn coin setelah beberapa percobaan. Area mungkin penuh.");
     }
 
-    // Visualisasi area spawn di Editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
@@ -60,5 +73,13 @@ public class CoinSpawner : MonoBehaviour
         Vector3 center = new Vector3(rightEdge + xSpawnOffset, (yMin + yMax) / 2, 0);
         Vector3 size = new Vector3(0.1f, yMax - yMin, 0);
         Gizmos.DrawWireCube(center, size);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        float testX = Application.isPlaying ? screenRightEdge + xSpawnOffset : Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x + xSpawnOffset;
+        Vector3 testCenter = new Vector3(testX, (yMin + yMax) / 2f, 0);
+        Gizmos.DrawWireSphere(testCenter, checkRadius);
     }
 }
