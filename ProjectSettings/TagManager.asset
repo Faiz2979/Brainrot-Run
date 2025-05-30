@@ -9,6 +9,7 @@ TagManager:
   - Death
   - Coin
   - Coins
+  - PowerUp
   layers:
   - Default
   - TransparentFX

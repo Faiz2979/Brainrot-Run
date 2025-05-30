@@ -1,3 +1,4 @@
+// PlayerController.cs
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,6 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 7f;
 
     private Rigidbody2D rb;
-    [SerializeField] private Animator anim;
     private bool isGrounded = false;
 
     private int jumpCount = 0;
@@ -26,12 +26,13 @@ public class PlayerController : MonoBehaviour
     private bool isPlayingLandSound = false;
 
     [Header("Slide Settings")]
-    public float slideDuration = 0.5f; // Durasi sliding
-    private bool isSliding = false;    // Status sedang sliding
-    private float slideTimer = 0f;     // Timer untuk durasi sliding
+    public float slideDuration = 0.5f;
+    private bool isSliding = false;
+    private float slideTimer = 0f;
 
     public CoinsManager cm;
     public TMP_Text coinText;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,22 +46,18 @@ public class PlayerController : MonoBehaviour
             jumpQueued = true;
         }
 
-        // Modifikasi input untuk sliding (hanya di tanah) dan fast fall (di udara)
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (isGrounded)
             {
-                // Aktifkan sliding
                 isSliding = true;
                 slideTimer = slideDuration;
             }
             else
             {
-                downQueued = true; // Untuk fast fall di udara
+                downQueued = true;
             }
         }
-
-        AnimationController();
     }
 
     void FixedUpdate()
@@ -69,7 +66,6 @@ public class PlayerController : MonoBehaviour
 
         if (jumpQueued)
         {
-            // Jika sedang sliding, hentikan sliding saat melompat
             if (isSliding)
             {
                 isSliding = false;
@@ -85,7 +81,6 @@ public class PlayerController : MonoBehaviour
             downQueued = false;
         }
 
-        // Mengurangi timer sliding jika sedang sliding
         if (isSliding)
         {
             slideTimer -= Time.fixedDeltaTime;
@@ -94,17 +89,18 @@ public class PlayerController : MonoBehaviour
                 isSliding = false;
             }
         }
+
+        HandleAudio();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Coins"))
         {
-            CoinsManager.Instance.AddCoins(1); // Gunakan singleton
-            Destroy(other.gameObject, 0.05f); // Delay kecil untuk memastikan trigger selesai
+            CoinsManager.Instance.AddCoins(1);
+            Destroy(other.gameObject, 0.05f);
         }
     }
-
 
     void Jump()
     {
@@ -129,23 +125,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void AnimationController()
+    void HandleAudio()
     {
-        float verticalVelocity = rb.velocity.y;
-
-        // Reset semua dulu
-        anim.SetBool("isRunning", false);
-        anim.SetBool("isJumping", false);
-        anim.SetBool("isFalling", false);
-        anim.SetBool("isSliding", false); // Reset animasi sliding
-
         if (isGrounded && GameManager.Instance.IsPlaying)
         {
-            // Jika sedang sliding, set animasi sliding
             if (isSliding)
             {
-                anim.SetBool("isSliding", true);
-                // Hentikan landSound jika sedang diputar
                 if (isPlayingLandSound)
                 {
                     audioSource.Stop();
@@ -154,9 +139,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                anim.SetBool("isRunning", true);
-
-                // Mainkan landSound jika belum dimainkan
                 if (!isPlayingLandSound)
                 {
                     audioSource.clip = landSound;
@@ -173,15 +155,10 @@ public class PlayerController : MonoBehaviour
                 audioSource.Stop();
                 isPlayingLandSound = false;
             }
-
-            if (verticalVelocity > 0.1f)
-            {
-                anim.SetBool("isJumping", true);
-            }
-            else if (verticalVelocity < -0.1f)
-            {
-                anim.SetBool("isFalling", true);
-            }
         }
     }
+
+    public bool IsGrounded => isGrounded;
+    public bool IsSliding => isSliding;
+    public float VerticalVelocity => rb.velocity.y;
 }
