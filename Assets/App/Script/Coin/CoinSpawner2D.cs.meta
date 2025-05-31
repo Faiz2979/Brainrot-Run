@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/App/Script/Player/PlayerAnimationPowerUp.cs.meta
+guid: 6175305ebc0a47843a2d2c3aa83af18f
+========
+guid: 2835c2676b4f8c746864a1ea49d98c8b
+>>>>>>>> development-faiz:Assets/App/Script/Player/CoinSpawner2D.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

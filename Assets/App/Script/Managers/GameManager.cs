@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,19 +12,45 @@ public class GameManager : MonoBehaviour
     private float highScore;
     private bool toggleMusicActive;
 
-    // === Getter untuk global akses ===
+    // === Global Accessors ===
     public bool IsPlaying => isPlaying;
+    public bool isMuted => !toggleMusicActive;
     public int Coins => coins;
     public float HighScore => highScore;
     public bool ToggleMusicActive => toggleMusicActive;
 
+    // === UI References ===
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject gameUI;
+
+    // === AudioSources (NO AudioClips) ===
+    [SerializeField] private AudioSource menuMusicSource;
+    [SerializeField] private AudioSource gameMusicSource;
+
     private void Awake()
     {
-        // Singleton pattern
+        // Singleton
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: if you want it to persist
+            DontDestroyOnLoad(gameObject);
+
+            // Setup music source defaults
+            if (menuMusicSource != null)
+            {
+                menuMusicSource.loop = true;
+                menuMusicSource.playOnAwake = false;
+            }
+
+            if (gameMusicSource != null)
+            {
+                gameMusicSource.loop = true;
+                gameMusicSource.playOnAwake = false;
+            }
+
+            PlayMenuMusic();
         }
         else
         {
@@ -32,11 +58,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // === Game State Setter ===
-    public void SetIsPlaying(bool value) { isPlaying = value; }
-    public void SetCoins(int value) { coins = value; }
-    public void SetHighScore(float value) { highScore = value; }
-    public void SetToggleMusicActive(bool value) { toggleMusicActive = value; }
+    // === Game State Setters ===
+    public void SetIsPlaying(bool value)
+    {
+        isPlaying = value;
+
+        if (value)
+        {
+            PlayGameMusic();
+        }
+        else
+        {
+            PlayMenuMusic();
+        }
+    }
+
+    public void SetCoins(int value) => coins = value;
+    public void SetHighScore(float value) => highScore = value;
+    public void SetToggleMusicActive(bool value)
+    {
+        toggleMusicActive = value;
+
+        if (menuMusicSource != null) menuMusicSource.mute = !value;
+        if (gameMusicSource != null) gameMusicSource.mute = !value;
+    }
 
     // === Game Flow ===
     public void PlayGame()
@@ -48,7 +93,6 @@ public class GameManager : MonoBehaviour
     public void OpenShop()
     {
         Debug.Log("Open Shop");
-        // Tambahkan logika membuka shop UI
     }
 
     public void QuitGame()
@@ -73,7 +117,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Restart Game");
         SetIsPlaying(false);
-        ScoreManager.Instance.ResetScore(); // Pastikan ScoreManager ada
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.ResetScore();
+        }
         SetIsPlaying(true);
     }
 
@@ -81,12 +129,36 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over");
         SetIsPlaying(false);
-        // Tambahkan tampilan Game Over UI jika perlu
+
+        if (gameOverUI != null)
+        {
+            if (gameUI != null) gameUI.SetActive(false);
+            gameOverUI.SetActive(true);
+        }
+
+        if (coins > highScore)
+        {
+            SetHighScore(coins);
+            Debug.Log("New High Score: " + highScore);
+        }
     }
 
-    public void toMenu(){
-        Debug.Log("Back to Menu");
-        SetIsPlaying(false);
-        // Tambahkan logika untuk kembali ke menu utama
+    // === Music Control ===
+    private void PlayMenuMusic()
+    {
+        if (menuMusicSource != null && !menuMusicSource.isPlaying)
+            menuMusicSource.Play();
+
+        if (gameMusicSource != null && gameMusicSource.isPlaying)
+            gameMusicSource.Stop();
+    }
+
+    private void PlayGameMusic()
+    {
+        if (gameMusicSource != null && !gameMusicSource.isPlaying)
+            gameMusicSource.Play();
+
+        if (menuMusicSource != null && menuMusicSource.isPlaying)
+            menuMusicSource.Stop();
     }
 }
