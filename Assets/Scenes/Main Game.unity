@@ -704,8 +704,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpDuration: 5
-  powerUpSound: {fileID: 0}
-  obstacleDestroySound: {fileID: 0}
+  powerUpSound: {fileID: 8300000, guid: ec8ef6cc0e3d92540b7ce9aafcfcf41b, type: 3}
+  obstacleDestroySound: {fileID: 8300000, guid: cfa7174e1346c844bac88a0b42f56a95, type: 3}
 --- !u!82 &303528327
 AudioSource:
   m_ObjectHideFlags: 0
